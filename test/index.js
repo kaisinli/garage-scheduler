@@ -1,7 +1,12 @@
 const testDb = require("./db");
-const {createTable} = require("../db")
-const assert = require("chai").assert;
-const { testRequests, newRequest } = require("./testData");
+const { createTable } = require("../db");
+const expect = require("chai").expect;
+const {
+  testRequests,
+  getAllResponse,
+  getOneResponse,
+  updatedResponse
+} = require("./testData");
 
 // import functions to be tested
 const {
@@ -14,7 +19,7 @@ const {
 
 describe("Connection", function() {
   //create test db
-  before(function(testDb, done) {
+  before(function(done) {
     createTable(testDb, done);
   });
 
@@ -36,7 +41,97 @@ describe("Connection", function() {
         )
       )
         .then(newAppts => {
-          assert.equal(newAppts.length, 5);
+          expect(newAppts).to.have.lengthOf(5);
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
+    });
+
+    it("should be fetch all appointments", function(done) {
+      new Promise((resolve, reject) => {
+        getAllAppointments(testDb, "2019-01-01", "2019-12-31", "ASC", function(
+          err,
+          appts
+        ) {
+          if (err) reject(err);
+          resolve(appts);
+        });
+      })
+        .then(appts => {
+          expect(appts).to.have.lengthOf(3);
+          expect(appts).deep.equal(getAllResponse);
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
+    });
+
+    it("should fetch one appointment", function(done) {
+      new Promise((resolve, reject) => {
+        getOneAppointment(testDb, 3, function(err, appt) {
+          if (err) reject(err);
+          resolve(appt);
+        });
+      })
+        .then(appt => {
+          expect(appt).deep.equal(getOneResponse);
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
+    });
+
+    it("should update the status of an appointment", function(done) {
+      new Promise((resolve, reject) => {
+        updateStatus(testDb, 3, "In Progress", function(err) {
+          if (err) reject(err);
+          resolve();
+        });
+      })
+        .then(() => {
+          return new Promise((resolve, reject) => {
+            getOneAppointment(testDb, 3, function(err, appt) {
+              if (err) reject(err);
+              resolve(appt);
+            });
+          });
+        })
+        .then(appt => {
+          expect(appt).deep.equal(updatedResponse);
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
+    });
+
+    it("should delete an appointment", function(done) {
+      new Promise((resolve, reject) => {
+        deleteAppointment(testDb, 3, function(err) {
+          if (err) reject(err);
+          resolve();
+        });
+      })
+        .then(() => {
+          return new Promise((resolve, reject) => {
+            getAllAppointments(
+              testDb,
+              "2019-01-01",
+              "2019-12-31",
+              "ASC",
+              function(err, appts) {
+                if (err) reject(err);
+                resolve(appts);
+              }
+            );
+          });
+        })
+        .then(appts => {
+          expect(appts).to.have.lengthOf(2);
           done();
         })
         .catch(err => {
