@@ -1,5 +1,3 @@
-const { db } = require("./index");
-
 const {
   getAllAppointmentsStmt,
   getOneAppointmentStmt,
@@ -8,7 +6,7 @@ const {
   deleteAppointmentStmt
 } = require("./stmts/appointments");
 
-const createAppointment = function(newAppointment, done) {
+const createAppointment = function(db, newAppointment, done) {
   newAppointment.price = parseInt(newAppointment.price);
 
   const {
@@ -34,7 +32,7 @@ const createAppointment = function(newAppointment, done) {
   );
 };
 
-const getAllAppointments = function(startDate, endDate, order, done) {
+const getAllAppointments = function(db, startDate, endDate, order, done) {
   const stmtWithOrder = getAllAppointmentsStmt + order;
 
   return db.all(stmtWithOrder, [startDate, endDate], function(err, appts) {
@@ -43,21 +41,21 @@ const getAllAppointments = function(startDate, endDate, order, done) {
   });
 };
 
-const getOneAppointment = function(id, done) {
+const getOneAppointment = function(db, id, done) {
   return db.get(getOneAppointmentStmt, [id], function(err, appt) {
     if (err) return done(err);
     return done(null, appt);
   });
 };
 
-const updateStatus = function(id, status, done) {
+const updateStatus = function(db, id, status, done) {
   return db.run(updateApptStatusStmt, [status, id], function(err) {
     if (err) return done(err);
     return done(null);
   });
 };
 
-const deleteAppointment = function(id, done) {
+const deleteAppointment = function(db, id, done) {
   return db.run(deleteAppointmentStmt, [id], function(err) {
     if (err) return done(err);
     return done(null);

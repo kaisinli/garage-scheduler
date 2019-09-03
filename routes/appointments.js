@@ -8,6 +8,8 @@ const {
   deleteAppointment
 } = require("../db/appointmentsQueries");
 
+const { db } = require('../db/index')
+
 // create new appointment
 router.post("/", function(req, res) {
   const {
@@ -45,7 +47,7 @@ router.post("/", function(req, res) {
     price
   };
 
-  createAppointment(newAppointment, function(err, id) {
+  createAppointment(db, newAppointment, function(err, id) {
     if (err) {
       return res.sendStatus(500);
     }
@@ -57,7 +59,8 @@ router.post("/", function(req, res) {
 router.get("/", function(req, res) {
   let { startDate, endDate, order = "ASC"} = req.body;
   if (!startDate || !endDate) return res.sendStatus(400);
-  let appointments = getAllAppointments(startDate, endDate, order, function(
+  
+  getAllAppointments(db, startDate, endDate, order, function(
     err,
     appts
   ) {
@@ -71,8 +74,9 @@ router.get("/", function(req, res) {
 // fetch one appointment
 router.get("/:id", function(req, res) {
   let apptId = req.params.id;
-  getOneAppointment(apptId, function(err, appt) {
+  getOneAppointment(db, apptId, function(err, appt) {
     if (err) return res.sendStatus(500);
+    if (!appt) return res.sendStatus(404);
     return res.send(appt);
   });
 });
@@ -84,7 +88,7 @@ router.put("/:id", function(req, res) {
 
   if (!status) return res.sendStatus(400);
 
-  updateStatus(apptId, status, function(err) {
+  updateStatus(db, apptId, status, function(err) {
     if (err) return res.sendStatus(500);
     return res.sendStatus(200);
   });
@@ -93,7 +97,7 @@ router.put("/:id", function(req, res) {
 // soft deletes an appointment
 router.delete("/:id", function(req, res) {
   let apptId = req.params.id;
-  deleteAppointment(apptId, function(err) {
+  deleteAppointment(db, apptId, function(err) {
     if (err) return res.sendStatus(500);
     return res.sendStatus(200);
   });

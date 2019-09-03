@@ -5,7 +5,7 @@ const getAllAppointmentsStmt = `SELECT rowid, *
 
 const getOneAppointmentStmt = `SELECT rowid, *
                            FROM appointments 
-                           WHERE rowid = ?`;
+                           WHERE rowid = ? AND isDeleted = 0`;
 
 const updateApptStatusStmt = `UPDATE appointments 
                               SET status = ?
