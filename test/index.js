@@ -24,24 +24,15 @@ describe("Connection", function() {
 
   describe("Appointments", function() {
     it("should be able to create a new appointment", function() {
-      let newAppts = [];
+      var newAppts = [];
       testRequests.forEach(request => {
-        let newAppt = createAppointment(testDb, request, function(err, id) {
+        createAppointment(testDb, request, function(err, id) {
           if (err) return err;
+          newAppts.push(id);
+          assert.equal(newAppts.length, newAppts.length++);
           return id;
         });
-        newAppts.push(newAppt);
       });
-      assert.equal(newAppts.length, 5);
     });
-  });
-
-  it("should be able to retrive a specific appointment", function() {
-    let apptDetails = getOneAppointment(testDb, 1, function(err, appt) {
-      if (err) return err;
-      return appt;
-    });
-
-    assert.equal("hello".length, 5);
   });
 });

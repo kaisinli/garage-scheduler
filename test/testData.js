@@ -55,4 +55,15 @@ const testRequests = [
   }
 ];
 
-module.exports= {testRequests}
+const newRequest = {
+    firstName: "kaisin",
+    lastName: "li",
+    email: "defffe@google.com",
+    phone: "786876786",
+    apptDate: "2019-09-03",
+    startTime: "09:00:00",
+    endTime: "10:00:00",
+    price: "39.00"
+  }
+  
+module.exports= {testRequests, newRequest}
