@@ -68,8 +68,10 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-// create DB tables
-createTable()
+// create DB table
+createTable(db, function(err){
+  if(err) console.log(err.message)
+});
 
 app.use(logger('dev'));
 app.use(express.json());

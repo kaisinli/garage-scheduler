@@ -1,7 +1,7 @@
-const { testDb, createTestTable } = require("./db");
-const createApptsTablesStmt = require("../db/stmts/createTables");
+const testDb = require("./db");
+const {createTable} = require("../db")
 const assert = require("chai").assert;
-const { testRequests, createApptReq } = require("./testData");
+const { testRequests, newRequest } = require("./testData");
 
 // import functions to be tested
 const {
@@ -14,8 +14,8 @@ const {
 
 describe("Connection", function() {
   //create test db
-  before(function() {
-    createTestTable();
+  before(function(testDb, done) {
+    createTable(testDb, done);
   });
 
   after(function() {
@@ -23,16 +23,25 @@ describe("Connection", function() {
   });
 
   describe("Appointments", function() {
-    it("should be able to create a new appointment", function() {
-      var newAppts = [];
-      testRequests.forEach(request => {
-        createAppointment(testDb, request, function(err, id) {
-          if (err) return err;
-          newAppts.push(id);
-          assert.equal(newAppts.length, newAppts.length++);
-          return id;
+    it("should be able to create new appointments", function(done) {
+      Promise.all(
+        testRequests.map(
+          request =>
+            new Promise((resolve, reject) => {
+              createAppointment(testDb, request, function(err, id) {
+                if (err) reject(err);
+                resolve(id);
+              });
+            })
+        )
+      )
+        .then(newAppts => {
+          assert.equal(newAppts.length, 5);
+          done();
+        })
+        .catch(err => {
+          done(err);
         });
-      });
     });
   });
 });

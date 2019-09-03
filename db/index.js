@@ -6,11 +6,15 @@ const db = new sqlite3.Database(":memory:", err => {
   console.log("Connected to SQlite database.");
 });
 
-const createTable = function() {
-  console.log("creating tables...");
-
-  db.run(createApptsTablesStmt, [], function(err) {
-    if (err) console.log(err.message);
+const createTable = function(database, done) {
+  database.run(createApptsTablesStmt, [], function(err) {
+    if (err) {
+      console.log(err.message);
+      done(err);
+    }else{
+      console.log("Created appointments table in test database.");
+      done(null);
+    }
   });
 };
 
