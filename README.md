@@ -4,6 +4,7 @@
 
 ## To start the app
 `npm install`
+`npm start`
 App will be running on port 3000
 
 
