@@ -26,17 +26,17 @@ The response is the id of the newly created appointment.
 #### GET /appointments
 This route will all the appointments in the database. It will fetch all the appointments in a specified date range. The request looks like:
 
-{
+`{
     startDate: "09:00:00",
     endDate: "10:00:00"
     order: "ASC" *or DESC*
-}
+}`
 
 Order is optional will be defaulted to "ASC".
 
 The response looks this, appointments are aranged by price:
 
-[
+`[
   {
     rowid: 2,
     firstName: "kaisin",
@@ -78,7 +78,7 @@ The response looks this, appointments are aranged by price:
   }
 
   ...
-]
+]`
 
 #### GET /appointments/:id
 
