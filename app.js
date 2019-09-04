@@ -1,31 +1,31 @@
-'use strict'
+"use strict";
 
-const debug = require('debug')('myapp:server');
-const http = require('http');
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const debug = require("debug")("myapp:server");
+const http = require("http");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 const app = express();
 
-const { db, createTable } = require('./db');
+const { db, createTable } = require("./db");
 
 // Get port from environment and store in Express.
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+const port = normalizePort(process.env.PORT || "3000");
+app.set("port", port);
 
 // Create HTTP server.
 const server = http.createServer(app);
 
 // Listen on provided port, on all network interfaces.
 server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+server.on("error", onError);
+server.on("listening", onListening);
 
 // Normalize a port into a number, string, or false.
 function normalizePort(val) {
-  let port = parseInt(val, 10);
+  const port = parseInt(val, 10);
 
   // named pipe
   if (isNaN(port)) return val;
@@ -38,20 +38,18 @@ function normalizePort(val) {
 
 // Event listener for HTTP server "error" event.
 function onError(error) {
-  if (error.syscall !== 'listen') throw error;
+  if (error.syscall !== "listen") throw error;
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
       process.exit(1);
       break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
       process.exit(1);
       break;
     default:
@@ -62,41 +60,39 @@ function onError(error) {
 // Event listener for HTTP server "listening" event.
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
 }
 
 // create DB table
-createTable(db, function(err){
-  if(err) console.log(err.message)
+createTable(db, function(err) {
+  if (err) console.log(err.message);
 });
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // set up API routers
-const appointmentRouter = require('./routes/appointments')
+const appointmentRouter = require("./routes/appointments");
 
-app.use('/appointments', appointmentRouter)
+app.use("/appointments", appointmentRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 module.exports = app;

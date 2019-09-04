@@ -58,7 +58,7 @@ router.post("/", function(req, res) {
 
 // fetch all appointments
 router.get("/", function(req, res) {
-  let { startDate, endDate, order = "ASC" } = req.body;
+  const { startDate, endDate, order = "ASC" } = req.body;
 
   // sends error 400 if any of the parameters are missing
   if (!startDate || !endDate) return res.sendStatus(400);
@@ -73,7 +73,7 @@ router.get("/", function(req, res) {
 
 // fetch one appointment
 router.get("/:id", function(req, res) {
-  let apptId = req.params.id;
+  const apptId = req.params.id;
   getOneAppointment(db, apptId, function(err, appt) {
     if (err) return res.sendStatus(500);
 
@@ -85,8 +85,8 @@ router.get("/:id", function(req, res) {
 
 // update status of one appointment
 router.put("/:id", function(req, res) {
-  let apptId = req.params.id;
-  let { status } = req.body;
+  const apptId = req.params.id;
+  const { status } = req.body;
 
   // sends error 400 if client doesn't send status in their request
   if (!status) return res.sendStatus(400);
@@ -99,7 +99,7 @@ router.put("/:id", function(req, res) {
 
 // soft deletes an appointment
 router.delete("/:id", function(req, res) {
-  let apptId = req.params.id;
+  const apptId = req.params.id;
   deleteAppointment(db, apptId, function(err) {
     if (err) return res.sendStatus(500);
     return res.sendStatus(200);
