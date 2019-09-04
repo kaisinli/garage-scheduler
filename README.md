@@ -51,7 +51,7 @@ The response looks this, appointments are aranged by price:
     firstName: "kaisin",
     lastName: "li",
     email: "user@email.com",
-    phone: "7868f76786",
+    phone: "7868767486",
     apptDate: "2019-11-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
@@ -64,7 +64,7 @@ The response looks this, appointments are aranged by price:
     firstName: "kaisin",
     lastName: "li",
     email: "user@email.com",
-    phone: "7868f76786",
+    phone: "7868767486",
     apptDate: "2019-05-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
@@ -77,7 +77,7 @@ The response looks this, appointments are aranged by price:
     firstName: "kaisin",
     lastName: "li",
     email: "user@email.com",
-    phone: "7868f76786",
+    phone: "7868767486",
     apptDate: "2019-05-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
@@ -100,7 +100,7 @@ This route will one appointment in the database. `:id` is the id of the appointm
     firstName: "kaisin",
     lastName: "li",
     email: "user@email.com",
-    phone: "7868f76786",
+    phone: "7868767486",
     apptDate: "2019-05-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
@@ -134,7 +134,8 @@ This route soft deletes an appointment. `:id` is the id of the appointment the u
 
 
 ## Assumptions
-1. User can only update the status.
+1. User can only update the status and nothing else.
 2. User can still update a deleted appointment. 
+3. No need for hard delete.
 
 
