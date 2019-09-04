@@ -1,10 +1,14 @@
 # Garage Scheduler
 
-### To start the app
+
+
+## To start the app
 `npm install`
 App will be running on port 3000
 
-### APIs
+
+
+## APIs
 
 #### POST /appointments
 This route will create a new appointment in the database. The request body looks like:
@@ -123,7 +127,8 @@ This route updates the the status of a specific appointment. The request body lo
 This route soft deletes an appointment. `:id` is the id of the appointment the user is trying to delete.
 
 
-###Assumptions
+
+## Assumptions
 1. User can only update the status.
 2. User can still update a deleted appointment. 
 
