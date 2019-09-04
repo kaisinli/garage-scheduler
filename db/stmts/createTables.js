@@ -1,3 +1,5 @@
+//  sql statement to create the appointments table in sqlite db
+
 const createApptsTablesStmt =
     `CREATE TABLE IF NOT EXISTS appointments (
                 firstName TEXT NOT NULL,

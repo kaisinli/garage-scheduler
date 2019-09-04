@@ -79,10 +79,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // set up API routers
-const indexRouter = require('./routes/index');
 const appointmentRouter = require('./routes/appointments')
 
-app.use('/', indexRouter);
 app.use('/appointments', appointmentRouter)
 
 // catch 404 and forward to error handler

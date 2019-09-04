@@ -8,7 +8,7 @@ const {
   deleteAppointment
 } = require("../db/appointmentsQueries");
 
-const { db } = require('../db/index')
+const { db } = require("../db/index");
 
 // create new appointment
 router.post("/", function(req, res) {
@@ -23,6 +23,7 @@ router.post("/", function(req, res) {
     price
   } = req.body;
 
+  // sends error 400 if any of these parameters are missing
   if (
     !firstName ||
     !lastName ||
@@ -57,13 +58,12 @@ router.post("/", function(req, res) {
 
 // fetch all appointments
 router.get("/", function(req, res) {
-  let { startDate, endDate, order = "ASC"} = req.body;
+  let { startDate, endDate, order = "ASC" } = req.body;
+
+  // sends error 400 if any of the parameters are missing
   if (!startDate || !endDate) return res.sendStatus(400);
-  
-  getAllAppointments(db, startDate, endDate, order, function(
-    err,
-    appts
-  ) {
+
+  getAllAppointments(db, startDate, endDate, order, function(err, appts) {
     if (err) {
       return res.sendStatus(500);
     }
@@ -76,6 +76,8 @@ router.get("/:id", function(req, res) {
   let apptId = req.params.id;
   getOneAppointment(db, apptId, function(err, appt) {
     if (err) return res.sendStatus(500);
+
+    // if appointment doesn't exsit, sends a 404
     if (!appt) return res.sendStatus(404);
     return res.send(appt);
   });
@@ -86,6 +88,7 @@ router.put("/:id", function(req, res) {
   let apptId = req.params.id;
   let { status } = req.body;
 
+  // sends error 400 if client doesn't send status in their request
   if (!status) return res.sendStatus(400);
 
   updateStatus(db, apptId, status, function(err) {

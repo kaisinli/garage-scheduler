@@ -1,3 +1,5 @@
+// sql statements to sqlite db
+
 const getAllAppointmentsStmt = `SELECT rowid, *
                                 FROM appointments 
                                 WHERE  apptDate >= ? AND apptDate <= ? AND isDeleted = 0

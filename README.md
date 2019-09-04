@@ -128,6 +128,11 @@ This route soft deletes an appointment. `:id` is the id of the appointment the u
 
 
 
+## To Run Mocha Test
+`npm test`
+
+
+
 ## Assumptions
 1. User can only update the status.
 2. User can still update a deleted appointment. 
