@@ -138,5 +138,21 @@ describe("Connection", function() {
           done(err);
         });
     });
+
+    it("should not able to query a deleted appointment", function(done) {
+      new Promise((resolve, reject) => {
+        getOneAppointment(testDb, 3, function(err, appt) {
+          if (err) reject(err);
+          resolve(appt);
+        });
+      })
+        .then(appt => {
+          expect(appt).deep.equal(undefined);
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
+    });
   });
 });

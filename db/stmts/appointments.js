@@ -14,6 +14,10 @@ const updateApptStatusStmt = `UPDATE appointments
 const createAppointmentStmt = `INSERT INTO appointments (firstName, lastName, email, phone, apptDate, startTime, endTime, price)
                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
+
+
+
+
 const deleteAppointmentStmt = `UPDATE appointments SET isDeleted = 1 WHERE rowid = ?`;
 
 module.exports = {

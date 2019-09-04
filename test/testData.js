@@ -7,7 +7,7 @@ const testRequests = [
     apptDate: "2020-11-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
-    price: 10.0
+    price: 10.00
   },
 
   {
@@ -18,7 +18,7 @@ const testRequests = [
     apptDate: "2019-11-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
-    price: 0.0
+    price: 0.00
   },
 
   {
@@ -29,7 +29,7 @@ const testRequests = [
     apptDate: "2019-05-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
-    price: 28.0
+    price: 28.00
   },
 
   {
@@ -40,7 +40,7 @@ const testRequests = [
     apptDate: "2019-05-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
-    price: 6.0
+    price: 6.00
   },
 
   {
@@ -51,7 +51,7 @@ const testRequests = [
     apptDate: "2018-01-01",
     startTime: "09:00:00",
     endTime: "10:00:00",
-    price: 3.0
+    price: 3.00
   }
 ];
 
