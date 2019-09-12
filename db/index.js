@@ -14,7 +14,7 @@ const createTable = function(database, done) {
       console.log(err.message);
       done(err);
     }else{
-      console.log("Created appointments table in test database.");
+      console.log("Created appointments table in database.");
       done(null);
     }
   });
